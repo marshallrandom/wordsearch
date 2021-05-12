@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Word Search</title>
+</head>
+<body>
+
+<form action="/wordsearch" method="get">
+  <label for="searchtext">Word:</label>
+  <input type="text" id="searchtext" name="searchtext"><br><br>
+  <input type="submit" value="Submit">
+					<tr th:each="wordresult : ${wordresults}">
+                        <td th:text="${wordresult}"></td>
+
+                    </tr>
+</form>
+
+</body>
+</html>
