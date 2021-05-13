@@ -11,10 +11,12 @@
   <label for="searchtext">Word:</label>
   <input type="text" id="searchtext" name="searchtext"><br><br>
   <input type="submit" value="Submit">
-					<tr th:each="wordresult : ${wordresults}">
-                        <td th:text="${wordresult}"></td>
+  <br><br>
 
-                    </tr>
+	<select name="wordresultslist" size="10">		
+			<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
+	</select>  
+
 </form>
 
 </body>
