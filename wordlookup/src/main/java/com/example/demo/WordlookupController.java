@@ -9,11 +9,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WordlookupController {
 	@RequestMapping(value="/wordsearch",method=RequestMethod.GET)
-	public String wordLookupRequest(@RequestParam("searchtext") String searchword, Model model) {
-		if (searchword != "")
+	public String wordLookupRequest(@RequestParam("searchtext") String searchword , 
+			@RequestParam("searchtype") String searchtype,
+			Model model) {
+		if (!searchword.equals(""))
 		{
 			try {
-				model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword + '%'));
+				if (searchtype.equals("beginswith"))
+					model.addAttribute("wordresults", WordDatabase.SearchForWords(searchword + '%'));
+				else if (searchtype.equals("endswith"))
+					model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword));					
+				else
+					model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword + '%'));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

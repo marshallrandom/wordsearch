@@ -4,6 +4,13 @@
 <meta charset="ISO-8859-1">
 
 <title>Word Search</title>
+	<style>
+		#searchtypeselect {
+		    outline: 2px solid blue;
+		    margin: 25px; 
+		    padding: 7px;
+		}
+	</style>
     <script type="text/javascript">
     	// Shows the google logo if google is typed or the foxconn building if foxconn is typed 
         function picture(val){ 
@@ -33,19 +40,45 @@
     </script>
 </head>
 <body>
+<h1>Search Word List</h1>
 
 <form action="/wordsearch" method="get">
   <!-- text entered to search on -->
   <label for="searchtext">Word:</label>
   <input type="text" id="searchtext" name="searchtext" onchange="picture(this.value)"><br><br>
+
+  <!-- text entered to search on -->  
+  <p>Search Type:</p>
+  <span id="searchtypeselect">
+    <input type="radio" id="beginswith"
+     name="searchtype" value="beginswith">
+    <label for="beginswith">Begins With</label>
+
+    <input type="radio" id="endswith"
+     name="searchtype" value="endswith">
+    <label for="endswith">Ends With</label>
+
+    <input type="radio" id="contains"
+     name="searchtype" value="contains" checked>
+    <label for="contains">Contains</label>
+  </span>
+  
+  <br><br><br>
+  
   <input type="submit" value="Submit">
+  
   <br><br>
+  
   <label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></label>
+
   <br>
+
   <select name="wordresultslist" size="10">		
 		<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
   </select>  
+
   <br><br>
+
   <img id="imagehere" src="" alt="" width="0" height="0" />
 
 </form>
