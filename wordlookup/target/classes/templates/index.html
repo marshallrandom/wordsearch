@@ -12,7 +12,8 @@
   <input type="text" id="searchtext" name="searchtext"><br><br>
   <input type="submit" value="Submit">
   <br><br>
-
+	<label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></label>
+	<br>
 	<select name="wordresultslist" size="10">		
 			<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
 	</select>  

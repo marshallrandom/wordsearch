@@ -44,7 +44,7 @@ public class WordDatabase {
 	            	returnrows.add(rSet.getString(1));
 	            }
 	        }
-	    }			
+	    }		
 		return returnrows;
 	}
 	
