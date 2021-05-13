@@ -73,7 +73,7 @@
 
   <br>
 
-  <select name="wordresultslist" size="10">		
+  <select th:if="${(wordresults != null) && (wordresults.size() > 0) }" name="wordresultslist" size="10">	
 		<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
   </select>  
 
