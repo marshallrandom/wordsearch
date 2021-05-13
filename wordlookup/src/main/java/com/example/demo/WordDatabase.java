@@ -1,6 +1,5 @@
 package com.example.demo;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import antlr.collections.List;
 public class WordDatabase {
     static Connection conn = null; 
 	// JDBC driver name and database URL
@@ -55,8 +53,8 @@ public class WordDatabase {
 	    Statement stmt = null; 
 		try {
 			downloadFile(new URL(WORDLIST_URL) , System.getProperty("user.dir") + "\\wordlist.txt");
-
-
+	
+	
 			// STEP 1: Register JDBC driver 
 	        Class.forName(JDBC_DRIVER); 
 	            
@@ -71,47 +69,43 @@ public class WordDatabase {
 	           "(LISTITEM VARCHAR(80))";  
 	        stmt.executeUpdate(sql);
 	        System.out.println("Created table in given database..."); 
-	        
-	        // STEP 4: Clean-up environment 
-	      //  stmt.close(); 
-	      //  conn.close(); 		
-
-	     File file = new File(System.getProperty("user.dir") + "\\wordlist.txt");
-
-				// STEP 1: Register JDBC driver 
-		        Class.forName(JDBC_DRIVER); 
-		            
-		        //STEP 2: Open a connection 
-		        System.out.println("Connecting to database..."); 
-		        conn = DriverManager.getConnection(DB_URL,USER,PASS);  
+		
+	
+		    File file = new File(System.getProperty("user.dir") + "\\wordlist.txt");
+	
+			// STEP 1: Register JDBC driver 
+	        Class.forName(JDBC_DRIVER); 
+	            
+	        //STEP 2: Open a connection 
+	        System.out.println("Connecting to database..."); 
+	        conn = DriverManager.getConnection(DB_URL,USER,PASS);  
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String st;
+	
+	         // STEP 3: Execute a query 
+	         stmt = conn.createStatement();
+	         sql = "";
+	         
+	
+	    	 while ((st = br.readLine()) != null)
+			 {
+	    		 
+	    	   sql = "INSERT INTO WORDLIST VALUES ( ? )";
+	    	    try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
+	    	        pStatement.setString(1, st);
+	
+	    	        pStatement.executeUpdate();
+	    	    }
 
-		         // STEP 3: Execute a query 
-		         stmt = conn.createStatement();
-		         sql = "";
-		         
-
-		    	 while ((st = br.readLine()) != null)
-				 {
-		    		 
-		    	   sql = "INSERT INTO WORDLIST VALUES ( ? )";
-		    	    try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
-		    	        pStatement.setString(1, st);
-
-		    	        pStatement.executeUpdate();
-		    	    }
-
-				  // System.out.println(st);
-				 }
-	    	 
+			 }
+	    	 br.close();
+		    	 
 
 
      } catch(Exception e) { 
         //Handle errors for Class.forName 
         e.printStackTrace(); 
-	     
-	   /*   */
+
 
 	}		
 		
