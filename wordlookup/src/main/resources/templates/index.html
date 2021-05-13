@@ -4,19 +4,49 @@
 <meta charset="ISO-8859-1">
 
 <title>Word Search</title>
+    <script type="text/javascript">
+    	// Shows the google logo if google is typed or the foxconn building if foxconn is typed 
+        function picture(val){ 
+			document.getElementById('imagehere').style.visibility = 'hidden';	
+			document.getElementById('imagehere').width = 0;
+			document.getElementById('imagehere').height = 0;			
+			if (val.toUpperCase() === "GOOGLE")
+			{
+				document.getElementById('imagehere').style.visibility = 'visible';
+				document.getElementById('imagehere').width = 300;
+				document.getElementById('imagehere').height = 200;	
+        		document.getElementById('imagehere').src = "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+			}
+			else if (val.toUpperCase() === "FOXCONN")
+			{
+				document.getElementById('imagehere').style.visibility = 'visible';
+				document.getElementById('imagehere').width = 300;
+				document.getElementById('imagehere').height = 200;	
+				document.getElementById('imagehere').src = "https://urbanmilwaukee.com/wp-content/uploads/2018/02/Image-uploaded-from-iOS-2-1024x768.jpg";
+			}
+			else
+			{
+        		document.getElementById('imagehere').src = "";       	
+        	}
+			
+        }
+    </script>
 </head>
 <body>
 
 <form action="/wordsearch" method="get">
+  <!-- text entered to search on -->
   <label for="searchtext">Word:</label>
-  <input type="text" id="searchtext" name="searchtext"><br><br>
+  <input type="text" id="searchtext" name="searchtext" onchange="picture(this.value)"><br><br>
   <input type="submit" value="Submit">
   <br><br>
-	<label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></label>
-	<br>
-	<select name="wordresultslist" size="10">		
-			<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
-	</select>  
+  <label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></label>
+  <br>
+  <select name="wordresultslist" size="10">		
+		<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
+  </select>  
+  <br><br>
+  <img id="imagehere" src="" alt="" width="0" height="0" />
 
 </form>
 
