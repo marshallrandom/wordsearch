@@ -12,20 +12,31 @@ public class WordlookupController {
 	public String wordLookupRequest(@RequestParam("searchtext") String searchword , 
 			@RequestParam("searchtype") String searchtype,
 			Model model) {
-		if (!searchword.equals(""))
+		if (!searchword.equals("")) //non-empty search criteria was sent
 		{
 			try {
-				if (searchtype.equals("beginswith"))
+				if (searchtype.equals("beginswith")) //return search results for words that begin with what they specified
+				{
 					model.addAttribute("wordresults", WordDatabase.SearchForWords(searchword + '%'));
-				else if (searchtype.equals("endswith"))
-					model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword));					
-				else
+					model.addAttribute("result_text", "Search results beginning with " + searchword);
+				}
+				else if (searchtype.equals("endswith")) //return search results for words that end with what they specified
+				{
+					model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword));
+					model.addAttribute("result_text", "Search results ending with " + searchword);
+				}
+				else //return search results for words that contain what they specified
+				{
 					model.addAttribute("wordresults", WordDatabase.SearchForWords('%' + searchword + '%'));
+					model.addAttribute("result_text", "Search results containing " + searchword);
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		else
+			model.addAttribute("result_text", "" + searchword);			
 		return "index";
 	}
 

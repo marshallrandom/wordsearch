@@ -10,6 +10,11 @@
 		    margin: 25px; 
 		    padding: 7px;
 		}
+		input[type=submit] {
+		  border: none; 
+		  height: 50px;
+		  width: 100px
+		}
 	</style>
     <script type="text/javascript">
     	// Shows the google logo if google is typed or the foxconn building if foxconn is typed 
@@ -65,14 +70,16 @@
   
   <br><br><br>
   
-  <input type="submit" value="Submit">
+  <input type="submit" value="Search">
   
   <br><br>
+  <span th:text="${result_text}"></span>
+  <br><br>
   
-  <label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></label>
+  <label>Total Results: <span th:text="${wordresults != null} ? ${wordresults.size()} : '0'"></span></label>
 
   <br>
-
+  <!-- hide list if there are no results --> 
   <select th:if="${(wordresults != null) && (wordresults.size() > 0) }" name="wordresultslist" size="10">	
 		<option th:each="wordresult : ${wordresults}"> <span th:text="${wordresult}"> </span> </option>			 
   </select>  
